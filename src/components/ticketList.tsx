@@ -46,38 +46,53 @@ const TicketList = ({refresh} : any) => {
     }
   };
 
-  return (<div className="bg-white p-4 rounded shadow w-full">
-    <h2 className="text-lg font-semibold mb-4">Support Tickets</h2>
+  return (<div className="flex justify-center items-start min-h-screen bg-gray-100 py-10">
+    <div className="w-full max-w-3xl space-y-4">
+      <h2 className="text-2xl font-bold text-gray-800">🎫 Support Tickets</h2>
 
-    {tickets.length === 0 && (<p className="text-gray-500 text-sm">No tickets found 😢</p>)}
+      {tickets.length === 0 && (<p className="text-gray-500 text-sm">No tickets found 😢</p>)}
 
-    {
-      tickets.map((t : any) => (<div key={t.id} className="border-b py-3">
-        <h3 className="font-semibold">{t.title}</h3>
+      {
+        tickets.map((t : any) => (<div key={t.id} className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition duration-200 border">
+          {/* Header */}
+          <div className="flex justify-between items-start">
+            <h3 className="font-semibold text-gray-800 text-lg">{t.title}</h3>
 
-        <p className="text-sm text-gray-600 truncate">{t.description}</p>
+            <span className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(t.status)}`}>
+              {t.status.toLowerCase().replace("_", " ")}
+            </span>
+          </div>
 
-        {/* Tags */}
-        <div className="flex gap-3 mt-2 text-xs">
-          <span className="bg-gray-100 px-2 py-1 rounded">{t.category}</span>
+          {/* Description */}
+          <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+            {t.description}
+          </p>
 
-          <span className="bg-gray-100 px-2 py-1 rounded">{t.priority}</span>
+          {/* Tags */}
+          <div className="flex gap-2 mt-3 flex-wrap">
+            <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
+              📂 {t.category}
+            </span>
 
-          {/* ✅ NOW WORKS */}
-          <span className={`px-2 py-1 rounded text-xs ${getStatusColor(t.status)}`}>
-            {t.status.toLowerCase().replace("_", " ")}
-          </span>
-        </div>
+            <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
+              ⚡ {t.priority}
+            </span>
+          </div>
 
-        {/* Status Dropdown */}
-        <select className="mt-2 border p-1 text-sm rounded" value={t.status.toLowerCase()} onChange={e => changeStatus(t.id, e.target.value)}>
-          <option value="open">Open</option>
-          <option value="in_progress">In Progress</option>
-          <option value="resolved">Resolved</option>
-          <option value="closed">Closed</option>
-        </select>
-      </div>))
-    }
+          {/* Footer */}
+          <div className="flex justify-between items-center mt-4">
+            <select className="border px-2 py-1 text-sm rounded focus:outline-none focus:ring-2 focus:ring-blue-400" value={t.status.toLowerCase()} onChange={e => changeStatus(t.id, e.target.value)}>
+              <option value="open">Open</option>
+              <option value="in_progress">In Progress</option>
+              <option value="resolved">Resolved</option>
+              <option value="closed">Closed</option>
+            </select>
+
+            <span className="text-xs text-gray-400">ID: #{t.id}</span>
+          </div>
+        </div>))
+      }
+    </div>
   </div>);
 };
 
