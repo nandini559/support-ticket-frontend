@@ -1,5 +1,5 @@
 // components/StatsDashboard.tsx
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {getStats} from "../services/api";
 import {
   PieChart,
@@ -83,7 +83,7 @@ const StatsDashboard = ({refresh} : any) => {
           <PieChart width={300} height={250}>
             <Pie data={categoryData} dataKey="value" nameKey="name" outerRadius={80}>
               {
-                categoryData.map((entry, index) => {
+                categoryData.map((_, index) => {
                   const COLORS = ["#3B82F6", "#10B981", "#F59E0B", "#EF4444"];
                   return (<Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>);
                 })
